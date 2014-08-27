@@ -1,4 +1,4 @@
-skrollr-decks 0.1.1
+skrollr-decks 0.1.2
 =============
 
 skrollr plugin for fullpage presentation decks

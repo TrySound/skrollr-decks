@@ -2,7 +2,7 @@
   "name": "skrollr-decks",
   "title": "skrollr decks plugin",
   "description": "skrollr plugin for fullpage presentation decks.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "homepage": "https://github.com/TrySound/skrollr-decks",
   "author": {
     "name": "Bogdan Chadkin",
