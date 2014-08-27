@@ -1,0 +1,35 @@
+{
+  "name": "skrollr-decks",
+  "title": "skrollr decks plugin",
+  "description": "skrollr plugin for fullpage presentation decks.",
+  "version": "0.1.1",
+  "homepage": "https://github.com/TrySound/skrollr-decks",
+  "author": {
+    "name": "Bogdan Chadkin",
+    "email": "trysound@yandex.ru"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/TrySound/skrollr-decks.git"
+  },
+  "bugs": {
+    "url": "https://github.com/TrySound/skrollr-decks/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/TrySound/skrollr-decks/blob/master/LICENSE.txt"
+    }
+  ],
+  "main": "dist/skrollr.decks.min.js",
+  "engines": {
+    "node": ">=0.8"
+  },
+  "devDependencies": {
+    "grunt-cli": "~0.1.7",
+    "grunt": "~0.4.1",
+    "grunt-contrib-uglify": "~0.2.0",
+    "grunt-contrib-jshint": "~0.3.0"
+  },
+  "keywords": []
+}
