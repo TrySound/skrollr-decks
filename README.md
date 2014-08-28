@@ -5,6 +5,9 @@ skrollr plugin for fullpage presentation decks
 
 #Documentation
 
+First of all: look at the example
+http://trysound.github.io/skrollr-decks/
+
 Download the `dist/skrollr.decks.min.js` file and include it right after the `skrollr.min.js` file. Then you need to call `skrollr.decks.init()` passing optionally some options. Here's a full example.
 
 ```js
