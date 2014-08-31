@@ -1,0 +1,28 @@
+{
+  "name": "skrollr-decks",
+  "version": "0.1.2",
+  "homepage": "https://github.com/trysound/skrollr-decks",
+  "authors": [
+    "Bogdan Chadkin <trysound@yandex.ru>"
+  ],
+  "description": "skrollr plugin that makes presentation scrolling decks",
+  "main": "src/skrollr.decks.js",
+  "keywords": [
+    "skrollr",
+    "decks",
+    "presentation",
+    "scroll",
+    "vanillajs"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "skrollr": ">=0.6.26"
+  }
+}

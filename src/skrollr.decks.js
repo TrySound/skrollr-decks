@@ -17,8 +17,7 @@
 	var DEFAULT_SEGMENT = 'skrollr-decks-segment',
 		DEFAULT_NAV     = 'skrollr-decks-nav';
 	
-	var _lastOffset,
-		_renderTimer;
+	var _lastOffset;
 	
 
 	function setHeight(segments) {
@@ -93,10 +92,10 @@
 			scroller.animateTo(offset + 1, {
 				duration: 300,
 				done: function () {
-					var stop = function () {
-						this.stopAnimateTo();
-					}.bind(this);
-					setTimeout(stop, 20);
+					var that = this;
+					setTimeout(function () {
+						that.stopAnimateTo();
+					}, 20);
 				}
 			});
 		}
@@ -110,19 +109,22 @@
 			options = options || {};
 			
 			var segments = resizeSegments(options.segment || DEFAULT_SEGMENT),
-				nav = generateNav(segments, options.nav || DEFAULT_NAV);
-			
+				nav = generateNav(segments, options.nav || DEFAULT_NAV),
+				_renderTimer;
+
 			this._instance = skrollr.init({
 				forceHeight: false
 			});
 			
+			
 			this._instance.refresh();
 			
 			this._instance.on('render', function (options) {
+					var scroller = this;
 					clearTimeout(_renderTimer);
-					_renderTimer = setTimeout(function (up) {
-						updateSegment(this, up, segments, nav);
-					}.bind(this, options.direction === 'up'), 20);
+					_renderTimer = setTimeout(function () {
+						updateSegment(scroller, options.direction === 'up', segments, nav);
+					}, 20);
 			});
 		}
 	};
