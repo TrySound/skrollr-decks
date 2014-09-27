@@ -10,6 +10,10 @@ http://trysound.github.io/skrollr-decks/
 
 Download the `dist/skrollr.decks.min.js` file and include it right after the `skrollr.min.js` file. Then you need to call `skrollr.decks.init()` passing optionally some options. Here's a full example.
 
+If you wanna use skrollr with own options, please add `forceHeight: false` when you initialize skrollr
+
+Then add this code to initialize decks
+
 ```js
 skrollr.decks.init({
     // Class of sections
