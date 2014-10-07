@@ -1,3 +1,9 @@
+/**
+ * skrollr-decks 0.1.4 (2014-10-07) - Makes fullpage presentation decks.
+ * Bogdan Chadkin - https://github.com/TrySound/skrollr-decks
+ * Free to use under terms of MIT license
+ */
+
 (function (window, document) {
 	'use strict';
 

@@ -1,7 +1,14 @@
 module.exports = function(grunt) {
-	//Configuration.
+
 	grunt.initConfig({
-		pkg: grunt.file.readJSON('package.json') ,
+		pkg: grunt.file.readJSON('package.json'),
+		banner: ['/**\n',
+			' * <%= pkg.title || pkg.name %> <%= pkg.version %>',
+			' (<%= grunt.template.today("yyyy-mm-dd") %>)',
+			' - <%= pkg.description %>\n',
+			' * <%= pkg.author.name %> - <%= pkg.homepage %>\n',
+			' * Free to use under terms of <%= pkg.license.type %> license\n',
+			' */\n\n'].join(''),
 		jshint: {
 			options: {
 				smarttabs: false,
@@ -21,23 +28,32 @@ module.exports = function(grunt) {
 			},
 			all: ['src/**/*.js']
 		},
+		concat: {
+			options: {
+				banner: '<%= banner %>',
+				stripBanners: true
+			},
+			main: {
+				src: ['src/skrollr.decks.js'],
+				dest: 'dist/skrollr.decks.js'
+			}
+		},
 		uglify: {
 			options: {
-				banner: '/*! skrollr-decks <%= pkg.version %> (<%= grunt.template.today("yyyy-mm-dd") %>) | Bogdan Chadkin - https://github.com/TrySound/skrollr-decks | Free to use under terms of MIT license */\n'
+				banner: '<%= banner %>'
 			},
-
-			all: {
-				files: {
-					'dist/skrollr.decks.min.js': 'src/skrollr.decks.js',
-				}
+			dist: {
+				src: '<%= concat.main.dest %>',
+				dest: 'dist/skrollr.decks.min.js'
 			}
 		}
 	});
 
-	//Dependencies.
+
 	grunt.loadNpmTasks('grunt-contrib-jshint');
+	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 
-	//Tasks.
-	grunt.registerTask('default', ['jshint', 'uglify']);
+
+	grunt.registerTask('default', ['jshint', 'concat', 'uglify']);
 };

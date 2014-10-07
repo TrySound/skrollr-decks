@@ -43,7 +43,21 @@
 		}
 
 		.segment-navigation {
-			display: none;
+			position: fixed;
+			z-index: 20;
+			background: rgba(230, 180, 120, .9);
+			width: 100%;
+		}
+		.segment-navigation ul {
+			list-style: none;
+			padding: 20px 40px;
+			margin: 0;
+		}
+		.segment-navigation li {
+			display: inline-block;
+		}
+		.segment-navigation a {
+			color: #000;
 		}
 
 	</style>
@@ -51,6 +65,29 @@
 </head>
 
 <body>
+
+<nav class="segment-navigation">
+	<ul>
+		<li>
+			<a href="#segment-1">Deck #1</a>
+		</li>
+		<li>
+			<a href="#segment-2">Deck #2</a>
+		</li>
+		<li>
+			<a href="#segment-3">Deck #3</a>
+		</li>
+		<li>
+			<a href="#segment-4">Deck #4</a>
+		</li>
+		<li>
+			<a href="#segment-5">Deck #5</a>
+		</li>
+		<li>
+			<a href="#segment-6">Deck #6</a>
+		</li>
+	</ul>
+</nav>
 
 <section id="skrollr-body">
 	
