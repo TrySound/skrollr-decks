@@ -1,7 +1,7 @@
-skrollr-decks 0.1.3
+skrollr-decks 0.1.4
 =============
 
-skrollr plugin for fullpage presentation decks
+[skrollr](https://github.com/Prinzhorn/skrollr) plugin for fullpage presentation decks
 
 #Documentation
 
