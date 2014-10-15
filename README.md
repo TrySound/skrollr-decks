@@ -12,7 +12,7 @@ http://trysound.github.io/skrollr-decks/
 
 Download the `dist/skrollr.decks.min.js` file and include it right after the `skrollr.min.js` file. Then you need to call `skrollr.decks.init()` passing optionally some options. Here's a full example.
 
-If you wanna use skrollr with own options, please add `forceHeight: false` when you initialize it
+If you wanna use skrollr with your own options, please add `forceHeight: false` when you initialize it
 
 Then add this code to initialize decks
 
@@ -26,17 +26,17 @@ skrollr.decks.init({
 });
 ```
 
-Every segment must have id.
+Every segment must have an id.
 
-For all segments will set `min-height` with the height of window. It will autoresize with the window resizing.
+Skrollr-decks will set `min-height` of each segment to the height of window. It will also autoresize with the window resizing.
 
-If the height of segment more than window height then it will be scrolled.
+If the height of segment is more than window height then the segement will scroll through before triggering the next segment.
 
 ##Navigation
 
-skrollr-decks can generate or use existing navigation.
+skrollr-decks can either generate nagivation or use existing navigation.
 
-Just add to your page this html:
+Just add this HTML to your page:
 
 ```html
 <nav class="segment-navigation">
@@ -63,4 +63,4 @@ Just add to your page this html:
 </nav>
 ```
 
-*Note: count of li elements and count of sections must be equal*
+*Note: the count of li elements and the count of sections must be equal*
