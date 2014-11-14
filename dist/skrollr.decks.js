@@ -1,19 +1,25 @@
 /**
- * skrollr-decks 0.1.4 (2014-10-07) - Makes fullpage presentation decks.
+ * skrollr-decks 0.1.4 (2014-11-14) - Makes fullpage presentation decks.
  * Bogdan Chadkin - https://github.com/TrySound/skrollr-decks
  * Free to use under terms of MIT license
  */
 
-(function (window, document) {
-	'use strict';
+(function (module) {
+	"use strict";
 
-	var skrollr = window.skrollr,
-		setTimeout = window.setTimeout,
+	if( ! window.skrollr) {
+		console.error('`skrollr` not found');
+	} else {
+		window.skrollr.decks = module(window, document, window.skrollr);
+	}
+
+
+} (function (window, document, skrollr) {
+	"use strict";
+
+	var setTimeout = window.setTimeout,
 		clearTimeout = window.clearTimeout;
-	
-	var DEFAULT_SEGMENT = 'skrollr-decks-segment',
-		DEFAULT_NAV     = 'skrollr-decks-nav';
-	
+
 	var _lastOffset;
 	
 
@@ -159,7 +165,7 @@
 		}
 	}
 
-	function updateSegment(scroller, up, segments, nav) {
+	function updateSegment(scroller, up, segments, nav, settings) {
 		var item,
 			target,
 			offset;
@@ -172,7 +178,7 @@
 		
 		if( ! scroller.isAnimatingTo() && offset !== _lastOffset) {
 			scroller.animateTo(offset + 1, {
-				duration: 300,
+				duration: settings.duration,
 				done: function () {
 					var that = this;
 					setTimeout(function () {
@@ -186,30 +192,43 @@
 	}
 
 	
-	skrollr.decks = {
-		init: function (options) {
-			options = options || {};
+	return {
+		init: function (user) {
+			var defaults = {
+				segment: 'skrollr-decks-segment',
+				nav: 'skrollr-decks-nav',
+				duration: 300,
+				delay: 200
+			};
+
+			var key,
+				settings = {};
+
+			user = user || {};
+
+			for(key in defaults) if(defaults.hasOwnProperty(key)) {
+				settings[key] = user[key] || defaults[key];
+			}
 
 			var inst = skrollr.init({
 				forceHeight: false
 			});
 			
-			var segments = resizeSegments(options.segment || DEFAULT_SEGMENT),
-				nav = getNav(segments, options.nav || DEFAULT_NAV),
+			var segments = resizeSegments(settings.segment),
+				nav = getNav(segments, settings.nav),
 				_renderTimer;
 
-			
 
 			inst.refresh();
 			
-			inst.on('render', function (options) {
+			inst.on('render', function (e) {
 				var scroller = this;
 				clearTimeout(_renderTimer);
 				_renderTimer = setTimeout(function () {
-					updateSegment(scroller, options.direction === 'up', segments, nav);
-				}, 20);
+					updateSegment(scroller, e.direction === 'up', segments, nav, settings);
+				}, settings.delay);
 			});
 		}
 	};
 
-} (window, document));
+}));

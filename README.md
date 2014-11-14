@@ -20,7 +20,13 @@ skrollr.decks.init({
     segment: 'skrollr-decks-segment',
     
     // Class of auxiliary segment navigation. Not matter for markup
-    nav: 'skrollr-decks-nav'
+    nav: 'skrollr-decks-nav',
+
+	// Moving to the next section
+    duration: 300,
+
+    // Delay after scroll
+    delay: 200
 });
 ```
 
