@@ -9,25 +9,6 @@ module.exports = function(grunt) {
 			' * <%= pkg.author.name %> - <%= pkg.homepage %>\n',
 			' * Free to use under terms of <%= pkg.license.type %> license\n',
 			' */\n\n'].join(''),
-		jshint: {
-			options: {
-				smarttabs: false,
-				curly: true,
-				immed: true,
-				latedef: true,
-				noarg: true,
-				quotmark: 'single',
-				undef: true,
-				unused: true,
-				strict: true,
-				globals: {
-					window: true,
-					document: true,
-					navigator: true
-				}
-			},
-			all: ['src/**/*.js']
-		},
 		concat: {
 			options: {
 				banner: '<%= banner %>',
@@ -50,10 +31,9 @@ module.exports = function(grunt) {
 	});
 
 
-	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 
 
-	grunt.registerTask('default', ['jshint', 'concat', 'uglify']);
+	grunt.registerTask('default', ['concat', 'uglify']);
 };
