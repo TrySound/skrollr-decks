@@ -1,16 +1,18 @@
-skrollr-decks 0.1.3
+skrollr-decks 0.1.4
 =============
 
-skrollr plugin for fullpage presentation decks
+[skrollr](https://github.com/Prinzhorn/skrollr) plugin for fullpage presentation decks
 
 #Documentation
+
+##Installation
 
 First of all: look at the example
 http://trysound.github.io/skrollr-decks/
 
 Download the `dist/skrollr.decks.min.js` file and include it right after the `skrollr.min.js` file. Then you need to call `skrollr.decks.init()` passing optionally some options. Here's a full example.
 
-If you wanna use skrollr with own options, please add `forceHeight: false` when you initialize skrollr
+If you wanna use skrollr with your own options, please add `forceHeight: false` when you initialize it
 
 Then add this code to initialize decks
 
@@ -30,8 +32,41 @@ skrollr.decks.init({
 });
 ```
 
-Every segment must have id.
+Every segment must have an id.
 
-For all segments will set `min-height` with the height of window. It will autoresize with the window resizing.
+Skrollr-decks will set `min-height` of each segment to the height of window. It will also autoresize with the window resizing.
 
-If the height of segment more than window height then it will be scrolled.
+If the height of segment is more than window height then the segement will scroll through before triggering the next segment.
+
+##Navigation
+
+skrollr-decks can either generate nagivation or use existing navigation.
+
+Just add this HTML to your page:
+
+```html
+<nav class="segment-navigation">
+	<ul>
+		<li>
+			<a href="#segment-1">Deck #1</a>
+		</li>
+		<li>
+			<a href="#segment-2">Deck #2</a>
+		</li>
+		<li>
+			<a href="#segment-3">Deck #3</a>
+		</li>
+		<li>
+			<a href="#segment-4">Deck #4</a>
+		</li>
+		<li>
+			<a href="#segment-5">Deck #5</a>
+		</li>
+		<li>
+			<a href="#segment-6">Deck #6</a>
+		</li>
+	</ul>
+</nav>
+```
+
+*Note: the count of li elements and the count of sections must be equal*
