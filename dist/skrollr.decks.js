@@ -1,5 +1,5 @@
 /**
- * skrollr-decks 0.1.5 (2014-11-14) - Makes fullpage presentation decks.
+ * skrollr-decks 0.1.6 (2014-11-21) - Makes fullpage presentation decks.
  * Bogdan Chadkin - https://github.com/TrySound/skrollr-decks
  * Free to use under terms of MIT license
  */
@@ -176,7 +176,7 @@
 			offset = scroller.relativeToAbsolute(target, 'top', 'top');
 		}
 		
-		if( ! scroller.isAnimatingTo() && offset !== _lastOffset) {
+		if( ! scroller.isAnimatingTo() && offset !== _lastOffset && settings.autoScroll) {
 			scroller.animateTo(offset + 1, {
 				duration: settings.duration,
 				done: function () {
@@ -198,7 +198,8 @@
 				segment: 'skrollr-decks-segment',
 				nav: 'skrollr-decks-nav',
 				duration: 300,
-				delay: 200
+				delay: 200,
+				autoScroll: true
 			};
 
 			var key,
