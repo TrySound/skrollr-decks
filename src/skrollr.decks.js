@@ -170,7 +170,7 @@
 			offset = scroller.relativeToAbsolute(target, 'top', 'top');
 		}
 		
-		if( ! scroller.isAnimatingTo() && offset !== _lastOffset) {
+		if( ! scroller.isAnimatingTo() && offset !== _lastOffset && settings.autoScroll) {
 			scroller.animateTo(offset + 1, {
 				duration: settings.duration,
 				done: function () {
@@ -192,7 +192,8 @@
 				segment: 'skrollr-decks-segment',
 				nav: 'skrollr-decks-nav',
 				duration: 300,
-				delay: 200
+				delay: 200,
+				autoScroll: true
 			};
 
 			var key,
