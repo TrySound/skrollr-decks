@@ -28,7 +28,10 @@ skrollr.decks.init({
     duration: 300,
 
     // Delay after scroll
-    delay: 200
+    delay: 200,
+    
+    // Whether or not to enable auto-scrolling
+    autoScroll: true
 });
 ```
 
