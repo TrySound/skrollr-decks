@@ -14,193 +14,249 @@
 	var setTimeout = window.setTimeout,
 		clearTimeout = window.clearTimeout;
 
-	var _lastOffset;
-	
 
-	function setHeight(segments) {
-		var height = window.innerHeight + 2 + 'px',
-			i;
+	/**
+	 * Helpers
+	 * 
+	 */
 
-		for(i = segments.length; i--; ) {
-			segments[i].style.minHeight = height;
+	function hasClass(el, name) {
+		return new RegExp(' ' + name + ' ').test(' ' + el.className + ' ');
+	}
+
+	function addClass(el, name) {
+		if ( el && ! hasClass(el, name)) {
+			el.className += (el.className ? ' ' : '') + name;
 		}
 	}
-	
-	function resizeSegments(segmentClass) {
-		var segments = document.getElementsByClassName(segmentClass);
-		
-		setHeight.call(window, segments);
-		window.addEventListener('resize', setHeight.bind(window, segments), false);
-		
-		return segments;
+
+	function removeClass(el, name) {
+		if (el && hasClass(el, name)) {
+			el.className = el.className.replace(new RegExp('(\\s|^)'+name+'(\\s|$)'),' ').replace(/^\s+|\s+$/g, '');
+		}
 	}
 
-	function setAnimateToAnchors(nav) {
-		var scroller = skrollr.get();
 
-		if(scroller !== undefined) {
-			nav.addEventListener('click', function (event) {
-				var el = event.target,
-					anchor,
-					section,
-					offset;
+	/**
+	 * Main Class
+	 * 
+	 */
 
-				if(el.tagName === 'A' && el.getAttribute('href').charAt(0) === '#') {
-					anchor = el.getAttribute('href').substr(1);
-					section = document.getElementById(anchor);
-					if(section !== undefined) {
-						offset = scroller.relativeToAbsolute(section, 'top', 'top');
-						scroller.animateTo(offset + 1, {
-							duration: 600,
-							done: function () {
-								var that = this;
-								setTimeout(function () {
-									that.stopAnimateTo();
-								}, 20);
-							}
-						});
+	function Main(settings) {
+		var inst = skrollr.get(),
+			renderTimer,
+			delay = settings.deckDelay,
+			update = this.updateSegment.bind(this);
+
+		this._settings = settings;
+		this.getSegments(settings.segments);
+
+		if(this._segments.length > 0) {
+			this.resizeSegments();
+
+			this.getNav(settings.nav);
+			this.listenAnchors();
+
+			inst.refresh();
+			inst.on('render', function (e) {
+				clearTimeout(renderTimer);
+				renderTimer = setTimeout(function () {
+					update(e.direction === 'up');
+				}, delay);
+			});
+		} else {
+			this.invalid = true;
+		}
+	}
+
+	Main.prototype = {
+		setActive: function (deck, duration) {
+			var item = this._items[deck.getAttribute('data-skrollr-decks-index')],
+				scroller = skrollr.get(),
+				offset;
+
+			offset = scroller.relativeToAbsolute(deck, 'top', 'top');
+			scroller.animateTo(offset + 1, {
+				duration: duration
+			});
+
+			if(this._activeDeck !== 'deck') {
+				removeClass(this._activeItem, 'skrollr-decks-achor-active');
+				removeClass(this._activeDeck, 'skrollr-deck-active');
+				addClass(item, 'skrollr-decks-achor-active');
+				addClass(deck, 'skrollr-deck-active');
+				this._activeItem = item;
+				this._activeDeck = deck;
+			}
+		},
+
+		getSegments: function (selector) {
+			var segments,
+				result = [],
+				el, i, max;
+
+			if(typeof selector === 'string') {
+				segments = document.querySelectorAll(selector);
+			} else if(selector.tagName) {
+				segments = [selector];
+			} else if(selector.length) {
+				segments = selector;
+			}
+
+			for(i = 0, max = segments.length; i < max; i++) {
+				el = segments[i];
+
+				if(el.tagName) {
+					if(! el.id) {
+						el.id = 'skrollr-deck-' + i;
 					}
+					result.push(el);
+				}
+			}
+
+			this._segments = result;
+			return result;
+		},
+
+		resizeSegments: function () {
+			var segments = this._segments,
+				wnd = window;
+
+			function setHeight() {
+				var height = wnd.innerHeight + 2 + 'px',
+					i;
+
+				for(i = segments.length; i--; ) {
+					segments[i].style.minHeight = height;
+				}
+			};
+			
+			setHeight();
+			window.addEventListener('resize', setHeight, false);
+		},
+
+		updateSegment: function (direction) {
+			var inst = skrollr.get(),
+				items, item, segment;
+
+			items = this._nav.getElementsByClassName('skrollable-between');
+			item = items[direction ? 0 : items.length - 1];
+
+			segment = this._segments[item.getAttribute('data-skrollr-decks-index')];
+			if(items.length > 1 || window.innerHeight + 2 === segment.clientHeight) {
+				this.setActive(segment, this._settings.deckDuration);
+			}
+		},
+
+
+		getNav: function (selector) {
+			var nav, menu,
+				segments = this._segments;
+
+			if(typeof selector === 'string') {
+				nav = document.querySelector(selector);
+			} else if(selector.tagName) {
+				nav = selector;
+			} else if(selector.length && selector[0].tagName) {
+				nav = selector[0];
+			}
+
+			this._items = [];
+			if(nav) {
+				if(nav.tagName === 'UL') {
+					menu = nav;
+					this.appendLinks(menu);
+				} else {
+					menu = nav.getElementsByTagName('ul')[0];
+					if(menu) {
+						this.appendLinks(menu);
+					} else {
+						menu = this.appendLinks();
+						nav.appendChild(menu);
+					}
+				}
+			} else {
+				menu = this.appendLinks();
+				menu.className = 'skrollr-decks-nav';
+				document.body.insertBefore(menu, document.body.firstChild);
+			}
+
+			this._nav = menu;
+			return menu;
+		},
+
+		appendLinks: function (menu) {
+			var segments = this._segments,
+				el, items, id,
+				i, max;
+
+			if(menu) {
+				items = menu.getElementsByTagName('li');
+			} else {
+				menu = document.createElement('ul');
+				items = [];
+			}
+
+			for(i = 0, max = segments.length; i < max; i++) {
+				id = '#' + segments[i].id;
+				el = items[i];
+				if( ! el) {
+					el = document.createElement('li');
+					menu.appendChild(el);
+				}
+
+				segments[i].setAttribute('data-skrollr-decks-index', i);
+				el.setAttribute('data-skrollr-decks-index', i);
+				el.setAttribute('data-anchor-target', id);
+				el.innerHTML = '<a href="' + id + '">' + el.innerHTML + '</a>';
+				if( ! el.hasAttribute('data-top-bottom')) {
+					el.setAttribute('data-top-bottom', '');
+				}
+				if( ! el.hasAttribute('data-bottom-top')) {
+					el.setAttribute('data-bottom-top', '');
+				}
+				this._items.push(el);
+			}
+
+			return menu;
+		},
+
+		listenAnchors: function () {
+			var self = this;
+
+			self._nav.addEventListener('click', function (event) {
+				var anchor = event.target,
+					item = anchor.parentNode,
+					index,
+					segment;
+
+				if(anchor.tagName === 'A' && item.hasAttribute('data-skrollr-decks-index')) {
+					index = item.getAttribute('data-skrollr-decks-index');
+					segment = self._segments[index];
+					self.setActive(segment, self._settings.gotoDuration);
 				}
 
 				event.preventDefault();
 			}, false);
 		}
-	}
+	};
 
-	function generateNav(segments, navClass) {
-		var menu = document.createElement('ul'),
-			item = document.createElement('li'),
-			newItem, i, max;
 
-		menu.className = navClass;
-		menu.style.display = 'none';
-		item.setAttribute('data-top-bottom', '');
-		item.setAttribute('data-bottom-top', '');
-
-		for(i = 0, max = segments.length; i < max; i++) {
-			newItem = item.cloneNode();
-			newItem.setAttribute('data-anchor-target', '#' + segments[i].id);
-			menu.appendChild(newItem);
-		}
-
-		document.body.appendChild(menu);
-
-		return menu;
-	}
-
-	function processNav(segments, el) {
-		var nav, i, max, item, items;
-
-		if(el.tagName === 'UL') {
-			nav = el;
-		} else{
-			el = el.getElementsByTagName('ul');
-			if(el.length > 0 && el[0].tagName === 'UL') {
-				nav = el[0];
-			} else {
-				return false;
-			}
-		}
-
-		items = nav.getElementsByTagName('li');
-
-		if(segments.length !== items.length) {
-			return false;
-		}
-
-		for(i = 0, max = segments.length; i < max; i++) {
-			item = items[i];
-			if( ! item.hasAttribute('data-top-bottom')) {
-				item.setAttribute('data-top-bottom', '');
-			}
-			if( ! item.hasAttribute('data-bottom-top')) {
-				item.setAttribute('data-bottom-top', '');
-			}
-
-			item.setAttribute('data-anchor-target', '#' + segments[i].id);
-		}
-
-		return nav;
-	}
-
-	function getNav(segments, nav_class) {
-		var menu = document.getElementsByClassName(nav_class);
-
-		if(menu.length > 0) {
-			menu = processNav(segments, menu[0]);
-			if(menu === false) {
-				menu = generateNav(segments, nav_class);
-			} else {
-				setAnimateToAnchors(menu);
-			}
-		} else {
-			menu = generateNav(segments, nav_class);
-		}
-
-		
-		return menu;
-	}
-
-	
-	function findByClass(parent, className, up) {
-		var items = parent.getElementsByClassName(className);
-		
-		return items[up ? 0 : items.length - 1];
-	}
-	
-	function getById(items, id) {
-		var el, i;
-		
-		for(i = items.length; i--; ) {
-			el = items[i];
-			if(el.id === id) {
-				return el;
-			}
-		}
-	}
-
-	function updateSegment(scroller, up, segments, nav, settings) {
-		var item,
-			target,
-			offset;
-
-		item = findByClass(nav, 'skrollable-between', up);
-		if(item) {
-			target = getById(segments, item.getAttribute('data-anchor-target').substr(1));
-			offset = scroller.relativeToAbsolute(target, 'top', 'top');
-		}
-		
-		if( ! scroller.isAnimatingTo() && offset !== _lastOffset && settings.autoScroll) {
-			scroller.animateTo(offset + 1, {
-				duration: settings.duration,
-				done: function () {
-					var that = this;
-					setTimeout(function () {
-						that.stopAnimateTo();
-					}, 20);
-				}
-			});
-		}
-
-		_lastOffset = offset;
-	}
-
-	
-	return {
+	var Decks =  {
 		init: function (user) {
 			var defaults = {
-				segment: 'skrollr-decks-segment',
-				nav: 'skrollr-decks-nav',
-				duration: 300,
-				delay: 200,
+				segments: '.skrollr-deck',
+				nav: '.skrollr-decks-nav',
+				gotoDuration: 600,
+				deckDuration: 300,
+				deckDelay: 200,
 				autoScroll: true
 			};
 
 			var key,
 				settings = {};
 
-			user = user || {};
-
+			user = typeof user === 'object' ? user : {};
 			for(key in defaults) if(defaults.hasOwnProperty(key)) {
 				settings[key] = user[key] || defaults[key];
 			}
@@ -208,22 +264,27 @@
 			var inst = skrollr.init({
 				forceHeight: false
 			});
-			
-			var segments = resizeSegments(settings.segment),
-				nav = getNav(segments, settings.nav),
-				_renderTimer;
 
-
-			inst.refresh();
-			
-			inst.on('render', function (e) {
-				var scroller = this;
-				clearTimeout(_renderTimer);
-				_renderTimer = setTimeout(function () {
-					updateSegment(scroller, e.direction === 'up', segments, nav, settings);
-				}, settings.delay);
-			});
+			if( ! this._decks) {
+				this._decks = new Main(settings);
+				if(this._decks.invalid) {
+					this._decks = undefined;
+				}
+			}
 		}
 	};
+
+
+	// Auto-initialize
+	document.addEventListener('DOMContentLoaded', function () {
+		var init = this.querySelector('.skrollr-decks-init');
+
+		if(init) {
+			Decks.init();
+		}
+	}, false);
+
+
+	return Decks;
 
 }));
