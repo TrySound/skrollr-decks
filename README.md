@@ -10,7 +10,7 @@ skrollr-decks
 First of all: look at the example
 http://trysound.github.io/skrollr-decks/
 
-Download the `dist/skrollr.decks.min.js` file and include it right after the `skrollr.min.js` file. Then you need to add 'skrollr-decks-init' class to any element on your page.
+Download the `dist/skrollr.decks.min.js` file and include it right after the `skrollr.min.js` file. Then you need to add 'skrollr-decks-init' class to any element on your page and 'skrollr-deck' class on every sections.
 
 Skrollr-decks will set `min-height` of each segment to the height of window. It will also autoresize with the window resizing.
 
