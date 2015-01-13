@@ -3,9 +3,7 @@ skrollr-decks
 
 [skrollr](https://github.com/Prinzhorn/skrollr) plugin for fullpage presentation decks
 
-#Documentation
-
-##Installation
+#Installation
 
 First of all: look at the example
 http://trysound.github.io/skrollr-decks/
@@ -15,6 +13,8 @@ Download the `dist/skrollr.decks.min.js` file and include it right after the `sk
 Skrollr-decks will set `min-height` of each segment to the height of window. It will also autoresize with the window resizing.
 
 If the height of segment is more than window height then the segement will scroll through before triggering the next segment.
+
+#Usage
 
 ##Navigation
 
