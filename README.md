@@ -43,36 +43,36 @@ If you wank create custom decks call this method
 
 ####options.segments
 
-Type: String; Default: '.skrollr-deck'
+Type: `String`; Default: `'.skrollr-deck'`
 
 classname of segments
 
 ####options.nav
 
-Type: String; Default: '.skrollr-decks-nav'
+Type: `String`; Default: `'.skrollr-decks-nav'`
 
 classname of navigation
 
 ####options.gotoDuration
 
-Type: Integer; Default: 600
+Type: `Integer`; Default: `600`
 
 scrolling duration on nav link click
 
 ####options.deckDuration
 
-Type: Integer; Default: 300
+Type: `Integer`; Default: `300`
 
 auto scrolling duration to next or previous deck
 
 ####options.deckDelay
 
-Type: Integer; Default: 200
+Type: `Integer`; Default: `200`
 
 delay for mouse scrolling
 
 ####options.autoScroll
 
-Type: Boolean; Default: true
+Type: `Boolean`; Default: `true`
 
 enable auto scroll on next or previous deck detection
