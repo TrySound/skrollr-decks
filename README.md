@@ -37,4 +37,30 @@ Just add this HTML to your page:
 
 ##Custom Decks
 
-Section will be soon...
+If you wank create custom decks call this method
+
+###skrollr.decks.init(options)
+
+####options.segments - classname of segments
+
+Type: String; Default: '.skrollr-deck'
+
+####options.nav classname of navigation
+
+Type: String; Default: '.skrollr-decks-nav'
+
+####options.gotoDuration - scrolling duration on nav link click
+
+Type: Integer; Default: 600
+
+####options.deckDuration - auto scrolling duration to next or previous deck
+
+Type: Integer; Default: 300
+
+####options.deckDelay - delay for mouse scrolling
+
+Type: Integer; Default: 200
+
+####options.autoScroll - enable auto scroll on next or previous deck detection
+
+Type: Boolean; Default: true
