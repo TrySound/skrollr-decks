@@ -76,3 +76,9 @@ delay for mouse scrolling
 Type: `Boolean`; Default: `true`
 
 enable auto scroll on next or previous deck detection
+
+#License
+
+[The MIT License (MIT)](LICENSE)
+
+Copyright &copy; 2014 Bogdan Chadkin
