@@ -4,8 +4,8 @@
   "authors": [
     "Bogdan Chadkin <trysound@yandex.ru>"
   ],
-  "description": "skrollr plugin that makes presentation scrolling decks",
-  "main": "src/skrollr.decks.js",
+  "description": "Fullpage presentation decks with scrolling",
+  "main": "dist/skrollr.decks.js",
   "keywords": [
     "skrollr",
     "decks",
