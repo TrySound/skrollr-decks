@@ -1,5 +1,5 @@
 /*!
- * skrollr-decks 0.2.1
+ * skrollr-decks 0.2.2
  * Fullpage presentation decks with scrolling
  * https://github.com/TrySound/skrollr-decks
  * 
@@ -203,6 +203,7 @@
 				items = menu.getElementsByTagName('li');
 			} else {
 				menu = document.createElement('ul');
+				menu.style.display = 'none';
 				items = [];
 			}
 

@@ -194,6 +194,7 @@
 				items = menu.getElementsByTagName('li');
 			} else {
 				menu = document.createElement('ul');
+				menu.style.display = 'none';
 				items = [];
 			}
 
