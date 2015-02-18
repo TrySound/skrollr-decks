@@ -170,13 +170,14 @@
 	// Update decks size
 	function resizeDecks() {
 		var wndHeight = window.innerHeight + 2,
-			deck, deckHeight, key;
-		for(key in segments) if(segments.hasOwnProperty(key)) {
-			deck = segments[key];
+			deck, deckHeight, i;
+		for(i = segmentsList.length - 1; i > -1; i--) {
+			deck = segmentsList[i];
 			deck.style.height = 'auto';
 			deckHeight = deck.offsetHeight;
 			deck.style.height = (deckHeight < wndHeight ? wndHeight : deckHeight) + 'px';
 		}
+		deck.offsetHeight;
 	}
 
 
