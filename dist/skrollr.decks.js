@@ -1,5 +1,5 @@
 /*!
- * skrollr-decks 1.0.0
+ * skrollr-decks 1.0.1
  * Fullpage presentation decks with scrolling
  * https://github.com/TrySound/skrollr-decks
  * 
@@ -26,8 +26,10 @@
 		duration: 600,
 		easing: 'quadratic',
 		delay: 500,
-		autoscroll: true,
-		onRender: null
+		autoscroll: true
+	}, callbacks = {
+		render: null,
+		change: null
 	};
 
 
@@ -38,7 +40,8 @@
 		settings = {},
 		segments = {},
 		segmentsList = [],
-		nav = document.createElement('ul');
+		nav = document.createElement('ul'),
+		currentDeck;
 
 
 	// Stop animating on scroll keys
@@ -71,10 +74,21 @@
 	return {
 		init: init,
 		animateTo: animateTo,
-		refresh: resizeDecks
+		refresh: resizeDecks,
+		on: on
 	};
 
 
+	function on(name, cb) {
+		if(name in callbacks) {
+			callbacks[name] = cb;
+		}
+	}
+
+	function trigger(name, data) {
+		var fn = callbacks[name];
+		typeof fn === 'function' && fn.apply({}, data);
+	}
 
 
 	// Initialize
@@ -92,6 +106,9 @@
 			settings[key] = user[key] || defaults[key];
 		}
 
+		var onRender = settings.onRender,
+			onChange = settings.onChange,
+
 		inst = skrollr.init({
 			forceHeight: false
 		});
@@ -105,15 +122,17 @@
 
 		inst.refresh(nav.children);
 
-		if(settings.autoscroll) {
-			window.addEventListener('resize', update, false);
-			inst.on('render', function (e) {
-				clearTimeout(renderTimer);
-				renderTimer = setTimeout(function () {
-					update(e);
-				}, settings.delay);
-			});
-		}
+		window.addEventListener('resize', update, false);
+		inst.on('render', function (e) {
+			var el = update(e);
+
+			clearTimeout(renderTimer);
+			renderTimer = setTimeout(function () {
+				settings.autoscroll && el && inst.animateTo(inst.relativeToAbsolute(el, 'top', 'top') + 1, settings);
+			}, settings.delay);
+
+			trigger('render', [e]);
+		});
 	}
 
 
@@ -184,7 +203,11 @@
 			if( ! isVol(el)) {
 				el = segments[active[after].getAttribute('data-anchor-target')];
 			}
-			inst.animateTo(inst.relativeToAbsolute(el, 'top', 'top') + 1, settings);
+
+			currentDeck !== el && trigger('change', [el])
+			currentDeck = el;
+
+			return el;
 		}
 	}
 

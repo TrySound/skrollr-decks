@@ -31,6 +31,11 @@ Recalc height of all decks. Need to update when content added
 - `anchor` - `#id` of deck, `up` or `down`
 - `noAnimation` - prevents animation
 
+###skrollr.decks.on(event, callback)
+
+- `change(activeElement)` - calls when active deck is changed
+- `render(e)` - skrollr render event
+
 ##License
 
 [The MIT License (MIT)](LICENSE)
