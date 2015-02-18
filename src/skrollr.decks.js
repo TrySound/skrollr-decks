@@ -49,14 +49,18 @@
 		}
 	}, false);
 
-	// Auto resize
-	window.addEventListener('resize', resizeDecks);
 
 	// Auto initialize
 	document.addEventListener('DOMContentLoaded', function () {
 		var el = document.querySelector('.skrollr-decks-init');
 		if(el && el.tagName === 'BODY') {
 			init();
+
+			// Auto resize
+			window.addEventListener('load', resizeDecks, false);
+			window.addEventListener('load', update, false);
+			window.addEventListener('resize', resizeDecks, false);
+			window.addEventListener('resize', update, false);
 		}
 	}, false);
 
@@ -113,7 +117,6 @@
 
 		inst.refresh(nav.children);
 
-		window.addEventListener('resize', update, false);
 		inst.on('render', function (e) {
 			var el = update(e);
 
