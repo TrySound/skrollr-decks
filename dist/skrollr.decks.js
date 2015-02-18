@@ -1,5 +1,5 @@
 /*!
- * skrollr-decks 1.0.2
+ * skrollr-decks 1.0.3
  * Fullpage presentation decks with scrolling
  * https://github.com/TrySound/skrollr-decks
  * 
@@ -197,6 +197,12 @@
 		var inst = skrollr.get(),
 			active = nav.getElementsByClassName('skrollable-between'),
 			el, before, after;
+
+		if(active.length === 1) {
+			el = segments[active[0].getAttribute('data-anchor-target')];
+			currentDeck !== el && trigger('change', [el])
+			currentDeck = el;
+		}
 
 		if(active.length === 2) {
 			before = e.direction === 'up' ? 0 : 1;

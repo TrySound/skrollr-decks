@@ -187,6 +187,10 @@ section:nth-of-type(6) {
 <script src="src/skrollr.decks.js"></script>
 <script>
 
+skrollr.decks.on('change', function (active) {
+	console.log(active);
+});
+
 document.querySelector('.main-nav').addEventListener('click', function (e) {
 	var el = e.target;
 
