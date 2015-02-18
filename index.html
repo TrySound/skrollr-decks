@@ -10,64 +10,111 @@
 	<link rel="stylesheet" href="http://necolas.github.io/normalize.css/3.0.1/normalize.css">
 
 	<style>
-		a {
-			color: inherit;
-		}
 
-		section {
-			font: bold 1em sans-serif; position: relative;
-			text-align: center; vertical-align: middle;
-			box-sizing: border-box;
-		}
-		section span {
-			color: #fff; font-size: 12em;
-			max-width: 100%;
-			max-height: 100%;
-			overflow: hidden;
-			position: absolute; top: 50%; left: 50%;
-			transform: translate(-50%, -50%);
-		}
+.wrapper {
+	position: relative;
+	overflow: hidden;
+	padding-bottom: 20px;
+	color: #555;
+}
 
-		section:nth-of-type(1) {
-			background: #393;
-		}
-		section:nth-of-type(2) {
-			background: #639;
-		}
-		section:nth-of-type(3) {
-			background: #963;
-		}
-		section:nth-of-type(4) {
-			background: #699;
-		}
-		section:nth-of-type(5) {
-			background: #933;
-		}
-		section:nth-of-type(6) {
-			padding: 50px 0;
-		}
+.ribbon {
+	font-size: 1rem;
+	z-index: 1000;
+	background-color: #2E2418;
+	overflow: hidden;
+	white-space: nowrap;
+	position: fixed;
+	right: -50px;
+	top: 40px;
+	-webkit-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	transform: rotate(45deg);
+	box-shadow: 0 0 8px rgba(0, 0, 0, .5);
+}
 
-		nav {
-			position: fixed;
-			z-index: 20;
-			background: rgba(230, 180, 120, .9);
-			width: 100%;
-		}
-		nav ul {
-			list-style: none;
-			padding: 20px 40px;
-			margin: 0;
-		}
-		nav li {
-			display: inline-block;
-			color: #000;
-		}
+@-webkit-keyframes pulse {
+	50% {box-shadow: 0 0 10px rgba(0, 0, 0, .2);}
+}
 
-	@media (min-width: 1280px) {
-		html {
-			font-size: 1.5em;
-		}
+@keyframes pulse {
+	50% {box-shadow: 0 0 10px rgba(0, 0, 0, .2);}
+}
+
+.ribbon:hover {
+	-webkit-animation: pulse .5s infinite;
+	animation: pulse .5s infinite;
+}
+
+.ribbon a {
+	border: 1px solid #fff;
+	color: #fff;
+	display: block;
+	font: bold .875em 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	margin: 1px 0;
+	padding: 10px 50px;
+	text-align: center;
+	text-decoration: none;
+}
+
+a {
+	color: inherit;
+}
+
+section {
+	box-sizing: border-box;
+	font: bold 1em sans-serif;
+	text-align: center;
+}
+
+section span {
+	display: block;
+	color: #fff; font-size: 12em;
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+section:nth-of-type(1) {
+	background: #393;
+}
+section:nth-of-type(2) {
+	background: #639;
+}
+section:nth-of-type(3) {
+	background: #963;
+}
+section:nth-of-type(4) {
+	background: #699;
+}
+section:nth-of-type(5) {
+	background: #933;
+}
+section:nth-of-type(6) {
+	padding: 50px 0;
+}
+
+.main-nav {
+	position: fixed;
+	z-index: 20;
+	background: rgba(230, 180, 120, .9);
+	width: 100%;
+}
+.main-nav ul {
+	list-style: none;
+	padding: 20px 40px;
+	margin: 0;
+}
+.main-nav li {
+	display: inline-block;
+	color: #000;
+}
+
+@media (min-width: 1280px) {
+	body {
+		font-size: 1.5em;
 	}
+}
 
 	</style>
 
@@ -75,75 +122,83 @@
 
 <body class="skrollr-decks-init">
 
-<nav class="skrollr-decks-nav">
-	<ul>
-		<li>Deck #1</li>
-		<li>Deck #2</li>
-		<li>Deck #3</li>
-		<li>Deck #4</li>
-		<li>Deck #5</li>
-		<li>Deck #6</li>
-	</ul>
-</nav>
+<div class="wrapper">
+
+	<div class="ribbon">
+		<a href="https://github.com/TrySound/skrollr-decks" target="_blank">Star me on GitHub</a>
+	</div>
+
+	<nav class="main-nav">
+		<ul>
+			<li><a href="#about">About</a></li>
+			<li><a href="up">Up</a></li>
+			<li><a href="down">Down</a></li>
+		</ul>
+	</nav>
 
 
-<main id="skrollr-body">
-	
-	<section class="skrollr-deck"
-			data-top-bottom="opacity: .5" data-bottom-top="opacity: .5"
-			data-top-top="opacity: 1" data-bottom-bottom="opacity: 1">
-		<span>1</span>
-	</section>
-	
-	<section class="skrollr-deck"
-			data-top-bottom="opacity: .5" data-bottom-top="opacity: .5"
-			data-top-top="opacity: 1" data-bottom-bottom="opacity: 1">
-		<span>2</span>
-	</section>
-	
-	<section class="skrollr-deck"
-			data-top-bottom="opacity: .5" data-bottom-top="opacity: .5"
-			data-top-top="opacity: 1" data-bottom-bottom="opacity: 1">
-		<span>3</span>
-	</section>
-	
-	<section class="skrollr-deck"
-			data-top-bottom="opacity: .5" data-bottom-top="opacity: .5"
-			data-top-top="opacity: 1" data-bottom-bottom="opacity: 1">
-		<span>4</span>
-	</section>
-	
-	<section class="skrollr-deck"
-			data-top-bottom="opacity: .5" data-bottom-top="opacity: .5"
-			data-top-top="opacity: 1" data-bottom-bottom="opacity: 1">
-		<span>5</span>
-	</section>
-	
-	<section class="skrollr-deck">
-		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi nobis fugit atque placeat, illo consequuntur ipsa corporis laborum commodi incidunt! Voluptas, vel, quibusdam.</p>
-		<p>Deleniti doloribus, voluptatibus praesentium recusandae, quos debitis. Voluptatum vel praesentium quo, pariatur odit nulla. Enim, ipsam, optio deserunt aperiam quo placeat ad repudiandae!</p>
-		<p>Rerum sed libero dolor neque explicabo amet culpa qui! Cupiditate accusamus necessitatibus quo, non, ratione facilis sint aliquam in iste optio quidem, eligendi.</p>
-		<p>Ex perferendis vitae iure nesciunt, tenetur laborum dolores, nulla, magni omnis libero cupiditate reprehenderit porro impedit quibusdam eveniet quos odio nihil laudantium repellendus.</p>
-		<p>Dolore ducimus est id alias unde aut ut magnam, quia voluptas dolorum sit rerum ea incidunt molestias, autem illo distinctio laboriosam commodi architecto?</p>
-		<p>Et adipisci vel molestias beatae odio vero tempore, suscipit consectetur fugiat similique consequuntur, officiis delectus enim reiciendis accusamus eum accusantium, possimus eos perferendis.</p>
-		<p>Odio minus enim, earum similique perspiciatis. Iusto eveniet, alias dignissimos expedita. Tempore rem, amet possimus. Nobis laudantium fugit est incidunt, libero atque aperiam.</p>
-		<p>Dolorum possimus magni optio distinctio facilis eum neque beatae debitis saepe voluptatibus laborum nam omnis excepturi adipisci perspiciatis, dicta amet odit impedit aspernatur!</p>
-		<p>Expedita labore et vero. Optio eius vitae illo ea aut doloribus cumque qui maiores consectetur, omnis, ut nulla cupiditate rerum. Sequi, quaerat, cupiditate.</p>
-		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi nobis fugit atque placeat, illo consequuntur ipsa corporis laborum commodi incidunt! Voluptas, vel, quibusdam.</p>
-		<p>Deleniti doloribus, voluptatibus praesentium recusandae, quos debitis. Voluptatum vel praesentium quo, pariatur odit nulla. Enim, ipsam, optio deserunt aperiam quo placeat ad repudiandae!</p>
-		<p>Rerum sed libero dolor neque explicabo amet culpa qui! Cupiditate accusamus necessitatibus quo, non, ratione facilis sint aliquam in iste optio quidem, eligendi.</p>
-		<p>Ex perferendis vitae iure nesciunt, tenetur laborum dolores, nulla, magni omnis libero cupiditate reprehenderit porro impedit quibusdam eveniet quos odio nihil laudantium repellendus.</p>
-		<p>Dolore ducimus est id alias unde aut ut magnam, quia voluptas dolorum sit rerum ea incidunt molestias, autem illo distinctio laboriosam commodi architecto?</p>
-		<p>Et adipisci vel molestias beatae odio vero tempore, suscipit consectetur fugiat similique consequuntur, officiis delectus enim reiciendis accusamus eum accusantium, possimus eos perferendis.</p>
-		<p>Odio minus enim, earum similique perspiciatis. Iusto eveniet, alias dignissimos expedita. Tempore rem, amet possimus. Nobis laudantium fugit est incidunt, libero atque aperiam.</p>
-		<p>Dolorum possimus magni optio distinctio facilis eum neque beatae debitis saepe voluptatibus laborum nam omnis excepturi adipisci perspiciatis, dicta amet odit impedit aspernatur!</p>
-		<p>Expedita labore et vero. Optio eius vitae illo ea aut doloribus cumque qui maiores consectetur, omnis, ut nulla cupiditate rerum. Sequi, quaerat, cupiditate.</p>
-	</section>
-</main>
+	<main id="skrollr-body">
+		
+		<section class="skrollr-deck">
+			<span>1</span>
+		</section>
+		
+		<section class="skrollr-deck">
+			<span>2</span>
+		</section>
+		
+		<section class="skrollr-deck">
+			<span>3</span>
+		</section>
+		
+		<section class="skrollr-deck">
+			<span>4</span>
+		</section>
+		
+		<section class="skrollr-deck">
+			<span>5</span>
+		</section>
+		
+		<section class="skrollr-deck" id="about">
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi nobis fugit atque placeat, illo consequuntur ipsa corporis laborum commodi incidunt! Voluptas, vel, quibusdam.</p>
+			<p>Deleniti doloribus, voluptatibus praesentium recusandae, quos debitis. Voluptatum vel praesentium quo, pariatur odit nulla. Enim, ipsam, optio deserunt aperiam quo placeat ad repudiandae!</p>
+			<p>Rerum sed libero dolor neque explicabo amet culpa qui! Cupiditate accusamus necessitatibus quo, non, ratione facilis sint aliquam in iste optio quidem, eligendi.</p>
+			<p>Ex perferendis vitae iure nesciunt, tenetur laborum dolores, nulla, magni omnis libero cupiditate reprehenderit porro impedit quibusdam eveniet quos odio nihil laudantium repellendus.</p>
+			<p>Dolore ducimus est id alias unde aut ut magnam, quia voluptas dolorum sit rerum ea incidunt molestias, autem illo distinctio laboriosam commodi architecto?</p>
+			<p>Et adipisci vel molestias beatae odio vero tempore, suscipit consectetur fugiat similique consequuntur, officiis delectus enim reiciendis accusamus eum accusantium, possimus eos perferendis.</p>
+			<p>Odio minus enim, earum similique perspiciatis. Iusto eveniet, alias dignissimos expedita. Tempore rem, amet possimus. Nobis laudantium fugit est incidunt, libero atque aperiam.</p>
+			<p>Dolorum possimus magni optio distinctio facilis eum neque beatae debitis saepe voluptatibus laborum nam omnis excepturi adipisci perspiciatis, dicta amet odit impedit aspernatur!</p>
+			<p>Expedita labore et vero. Optio eius vitae illo ea aut doloribus cumque qui maiores consectetur, omnis, ut nulla cupiditate rerum. Sequi, quaerat, cupiditate.</p>
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi nobis fugit atque placeat, illo consequuntur ipsa corporis laborum commodi incidunt! Voluptas, vel, quibusdam.</p>
+			<p>Deleniti doloribus, voluptatibus praesentium recusandae, quos debitis. Voluptatum vel praesentium quo, pariatur odit nulla. Enim, ipsam, optio deserunt aperiam quo placeat ad repudiandae!</p>
+			<p>Rerum sed libero dolor neque explicabo amet culpa qui! Cupiditate accusamus necessitatibus quo, non, ratione facilis sint aliquam in iste optio quidem, eligendi.</p>
+			<p>Ex perferendis vitae iure nesciunt, tenetur laborum dolores, nulla, magni omnis libero cupiditate reprehenderit porro impedit quibusdam eveniet quos odio nihil laudantium repellendus.</p>
+			<p>Dolore ducimus est id alias unde aut ut magnam, quia voluptas dolorum sit rerum ea incidunt molestias, autem illo distinctio laboriosam commodi architecto?</p>
+			<p>Et adipisci vel molestias beatae odio vero tempore, suscipit consectetur fugiat similique consequuntur, officiis delectus enim reiciendis accusamus eum accusantium, possimus eos perferendis.</p>
+			<p>Odio minus enim, earum similique perspiciatis. Iusto eveniet, alias dignissimos expedita. Tempore rem, amet possimus. Nobis laudantium fugit est incidunt, libero atque aperiam.</p>
+			<p>Dolorum possimus magni optio distinctio facilis eum neque beatae debitis saepe voluptatibus laborum nam omnis excepturi adipisci perspiciatis, dicta amet odit impedit aspernatur!</p>
+			<p>Expedita labore et vero. Optio eius vitae illo ea aut doloribus cumque qui maiores consectetur, omnis, ut nulla cupiditate rerum. Sequi, quaerat, cupiditate.</p>
+		</section>
+	</main>
 
+</div>
 
 <script src='http://prinzhorn.github.io/skrollr/dist/skrollr.min.js'></script>
 <script src="src/skrollr.decks.js"></script>
+<script>
+
+document.querySelector('.main-nav').addEventListener('click', function (e) {
+	var el = e.target;
+
+	if(el.tagName === 'A') {
+		skrollr.decks.animateTo(el.getAttribute('href'));
+	}
+
+	e.preventDefault();
+}, false);
+
+</script>
+
 
 </body>
 
