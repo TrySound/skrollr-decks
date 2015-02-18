@@ -124,9 +124,15 @@
 			var el = update(e);
 
 			clearTimeout(renderTimer);
-			renderTimer = setTimeout(function () {
-				settings.autoscroll && el && inst.animateTo(inst.relativeToAbsolute(el, 'top', 'top') + 1, settings);
-			}, settings.delay);
+			if(el && settings.autoscroll) {
+				renderTimer = setTimeout(function () {
+					var up = e.direction === 'up',
+						offset = (up ? - window.innerHeight - 1 : 1);
+
+					offset += inst.relativeToAbsolute(el, 'top', up ? 'bottom' : 'top');
+					inst.animateTo(offset, settings);
+				}, settings.delay);
+			}
 
 			trigger('render', [e]);
 		});
