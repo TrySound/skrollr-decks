@@ -19,8 +19,8 @@
 		delay: 500,
 		autoscroll: true
 	}, callbacks = {
-		render: null,
-		change: null
+		render: [],
+		change: []
 	};
 
 
@@ -75,14 +75,17 @@
 
 
 	function on(name, cb) {
-		if(name in callbacks) {
-			callbacks[name] = cb;
+		if((name = name.toLowerCase()) in callbacks && typeof cb === 'function') {
+			callbacks[name].unshift(cb);
 		}
 	}
 
 	function trigger(name, data) {
-		var fn = callbacks[name];
-		typeof fn === 'function' && fn.apply({}, data);
+		var collection = callbacks[name], i;
+
+		for(i = collection.length - 1; i > -1; i--) {
+			collection[i].apply({}, data);
+		}
 	}
 
 
