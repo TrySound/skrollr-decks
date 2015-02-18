@@ -1,5 +1,5 @@
 /*!
- * skrollr-decks 1.0.3
+ * skrollr-decks 1.0.4
  * Fullpage presentation decks with scrolling
  * https://github.com/TrySound/skrollr-decks
  * 
@@ -28,8 +28,8 @@
 		delay: 500,
 		autoscroll: true
 	}, callbacks = {
-		render: null,
-		change: null
+		render: [],
+		change: []
 	};
 
 
@@ -64,14 +64,14 @@
 		var el = document.querySelector('.skrollr-decks-init');
 		if(el && el.tagName === 'BODY') {
 			init();
-
-			// Auto resize
-			window.addEventListener('load', resizeDecks, false);
-			window.addEventListener('load', update, false);
-			window.addEventListener('resize', resizeDecks, false);
-			window.addEventListener('resize', update, false);
 		}
 	}, false);
+
+	// Auto resize
+	window.addEventListener('load', resizeDecks, false);
+	window.addEventListener('load', update, false);
+	window.addEventListener('resize', resizeDecks, false);
+	window.addEventListener('resize', update, false);
 
 
 
@@ -84,14 +84,17 @@
 
 
 	function on(name, cb) {
-		if(name in callbacks) {
-			callbacks[name] = cb;
+		if((name = name.toLowerCase()) in callbacks && typeof cb === 'function') {
+			callbacks[name].unshift(cb);
 		}
 	}
 
 	function trigger(name, data) {
-		var fn = callbacks[name];
-		typeof fn === 'function' && fn.apply({}, data);
+		var collection = callbacks[name], i;
+
+		for(i = collection.length - 1; i > -1; i--) {
+			collection[i].apply({}, data);
+		}
 	}
 
 
@@ -130,9 +133,15 @@
 			var el = update(e);
 
 			clearTimeout(renderTimer);
-			renderTimer = setTimeout(function () {
-				settings.autoscroll && el && inst.animateTo(inst.relativeToAbsolute(el, 'top', 'top') + 1, settings);
-			}, settings.delay);
+			if(el && settings.autoscroll) {
+				renderTimer = setTimeout(function () {
+					var up = e.direction === 'up',
+						offset = (up ? - window.innerHeight - 1 : 1);
+
+					offset += inst.relativeToAbsolute(el, 'top', up ? 'bottom' : 'top');
+					inst.animateTo(offset, settings);
+				}, settings.delay);
+			}
 
 			trigger('render', [e]);
 		});
@@ -179,13 +188,14 @@
 	// Update decks size
 	function resizeDecks() {
 		var wndHeight = window.innerHeight + 2,
-			deck, deckHeight, key;
-		for(key in segments) if(segments.hasOwnProperty(key)) {
-			deck = segments[key];
+			deck, deckHeight, i;
+		for(i = segmentsList.length - 1; i > -1; i--) {
+			deck = segmentsList[i];
 			deck.style.height = 'auto';
 			deckHeight = deck.offsetHeight;
 			deck.style.height = (deckHeight < wndHeight ? wndHeight : deckHeight) + 'px';
 		}
+		deck.offsetHeight;
 	}
 
 
