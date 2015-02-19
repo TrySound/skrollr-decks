@@ -10,6 +10,19 @@
 	<link rel="stylesheet" href="https://necolas.github.io/normalize.css/3.0.1/normalize.css">
 
 	<style>
+body {
+	font: bold 1em sans-serif;
+}
+
+@media (min-width: 1280px) {
+	body {
+		font-size: 1.5em;
+	}
+}
+
+a {
+	color: inherit;
+}
 
 .wrapper {
 	position: relative;
@@ -57,44 +70,6 @@
 	text-decoration: none;
 }
 
-a {
-	color: inherit;
-}
-
-section {
-	position: relative;
-	box-sizing: border-box;
-	font: bold 1em sans-serif;
-	text-align: center;
-	z-index: 100;
-}
-
-section span {
-	display: block;
-	color: #fff; font-size: 12em;
-	position: relative;
-	top: 50%;
-	transform: translateY(-50%);
-}
-
-section:nth-of-type(1) {
-	background: #393;
-}
-section:nth-of-type(2) {
-	background: #639;
-}
-section:nth-of-type(3) {
-	background: #963;
-}
-section:nth-of-type(4) {
-	background: #699;
-}
-section:nth-of-type(5) {
-	background: #933;
-}
-section:nth-of-type(6) {
-	padding: 50px 0;
-}
 
 .main-nav {
 	position: fixed;
@@ -112,10 +87,34 @@ section:nth-of-type(6) {
 	color: #000;
 }
 
-@media (min-width: 1280px) {
-	body {
-		font-size: 1.5em;
-	}
+
+.skrollr-deck {
+	position: relative;
+	box-sizing: border-box;
+	text-align: center;
+	z-index: 100;
+}
+
+.float-void {
+	visibility: hidden;
+}
+
+.float-deck {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+}
+
+.float-deck span,
+.skrollr-deck span {
+	display: block;
+	color: #fff; font-size: 12em;
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
 }
 
 	</style>
@@ -138,24 +137,22 @@ section:nth-of-type(6) {
 		</ul>
 	</nav>
 
-	<section style="background: #0f0; position:fixed; top: 0; left: 0; width: 100%; height: 100%;"
-		data-anchor-target="#second"
-		data-bottom-bottom="transform: translateY(0%);"
-		data-top-bottom="transform: translateY(-100%);"
-		data-smooth-scrolling="off"
-	>
+	<section class="float-deck" style="background: #639;"
+			data-anchor-target="#second" data-smooth-scrolling="off"
+			data-bottom-bottom="transform: translateY(0%);"
+			data-top-bottom="transform: translateY(-100%);">
 		<span>2</span>
 	</section>
 
 	<main id="skrollr-body">
 		
-		<section class="skrollr-deck">
+		<section class="skrollr-deck" style="background: #393;">
 			<span>1</span>
 		</section>
 		
-		<section class="skrollr-deck" id="second" style="z-index: 20;"></section>
+		<section class="skrollr-deck float-void" id="second"></section>
 		
-		<section class="skrollr-deck" style="color: #fff;">
+		<section class="skrollr-deck" style="color: #fff; background: #963;">
 			<br>
 			<br>
 			<br>
@@ -211,15 +208,15 @@ section:nth-of-type(6) {
 			<br>
 		</section>
 		
-		<section class="skrollr-deck">
+		<section class="skrollr-deck" style="background: #699;">
 			<span>4</span>
 		</section>
 		
-		<section class="skrollr-deck">
+		<section class="skrollr-deck" style="background: #933;">
 			<span>5</span>
 		</section>
 		
-		<section class="skrollr-deck" id="about">
+		<section class="skrollr-deck" id="about" style="padding: 50px 0;">
 			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi nobis fugit atque placeat, illo consequuntur ipsa corporis laborum commodi incidunt! Voluptas, vel, quibusdam.</p>
 			<p>Deleniti doloribus, voluptatibus praesentium recusandae, quos debitis. Voluptatum vel praesentium quo, pariatur odit nulla. Enim, ipsam, optio deserunt aperiam quo placeat ad repudiandae!</p>
 			<p>Rerum sed libero dolor neque explicabo amet culpa qui! Cupiditate accusamus necessitatibus quo, non, ratione facilis sint aliquam in iste optio quidem, eligendi.</p>
