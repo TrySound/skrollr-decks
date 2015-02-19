@@ -1,5 +1,5 @@
 /*!
- * skrollr-decks 1.0.4
+ * skrollr-decks 1.0.5
  * Fullpage presentation decks with scrolling
  * https://github.com/TrySound/skrollr-decks
  * 
@@ -37,7 +37,7 @@
 	var setTimeout = window.setTimeout,
 		clearTimeout = window.clearTimeout,
 		isInitialized = false,
-		settings = {},
+		settings,
 		segments = {},
 		segmentsList = [],
 		nav = document.createElement('ul'),
@@ -106,21 +106,19 @@
 			isInitialized = true;
 		}
 
-		var key, inst, renderTimer;
+		var key, inst, renderTimer, local;
 
+		local = settings = {};
 		user = typeof user === 'object' ? user : {};
 		for(key in defaults) if(defaults.hasOwnProperty(key)) {
 			settings[key] = user[key] || defaults[key];
 		}
 
-		var onRender = settings.onRender,
-			onChange = settings.onChange,
-
 		inst = skrollr.init({
 			forceHeight: false
 		});
 
-		segments = findDecks(settings.decks, segmentsList);
+		segments = findDecks(local.decks, segmentsList);
 		nav = createNav(segmentsList);
 
 		resizeDecks();
@@ -130,17 +128,14 @@
 		inst.refresh(nav.children);
 
 		inst.on('render', function (e) {
-			var el = update(e);
+			var inst = this,
+				coord = update.call(inst, e);
 
 			clearTimeout(renderTimer);
-			if(el && settings.autoscroll) {
+			if(coord !== undefined && local.autoscroll) {
 				renderTimer = setTimeout(function () {
-					var up = e.direction === 'up',
-						offset = (up ? - window.innerHeight - 1 : 1);
-
-					offset += inst.relativeToAbsolute(el, 'top', up ? 'bottom' : 'top');
-					inst.animateTo(offset, settings);
-				}, settings.delay);
+					inst.animateTo(coord, local);
+				}, local.delay);
 			}
 
 			trigger('render', [e]);
@@ -187,6 +182,10 @@
 
 	// Update decks size
 	function resizeDecks() {
+		if( ! isInitialized) {
+			return;
+		}
+
 		var wndHeight = window.innerHeight + 2,
 			deck, deckHeight, i;
 		for(i = segmentsList.length - 1; i > -1; i--) {
@@ -199,14 +198,18 @@
 	}
 
 
-
-
-
-	// Autoscroll
+	// Active and Autoscroll
 	function update(e) {
+		if( ! isInitialized) {
+			return;
+		}
+
 		var inst = skrollr.get(),
 			active = nav.getElementsByClassName('skrollable-between'),
-			el, before, after;
+			wndTop = e.curTop,
+			wndHeight = window.innerHeight,
+			offset =  wndHeight * settings.offset / 100,
+			el, upper, lower, top, bottom, coord;
 
 		if(active.length === 1) {
 			el = segments[active[0].getAttribute('data-anchor-target')];
@@ -215,31 +218,24 @@
 		}
 
 		if(active.length === 2) {
-			before = e.direction === 'up' ? 0 : 1;
-			after = e.direction === 'up' ? 1 : 0;
+			upper = segments[active[0].getAttribute('data-anchor-target')];
+			lower = segments[active[1].getAttribute('data-anchor-target')];
+			bottom = inst.relativeToAbsolute(upper, 'top', 'bottom');
+			top = inst.relativeToAbsolute(lower, 'top', 'top');
 
-			el = segments[active[before].getAttribute('data-anchor-target')];
-			if( ! isVol(el)) {
-				el = segments[active[after].getAttribute('data-anchor-target')];
+			if(e.direction === 'up' && bottom - offset > wndTop || top + offset > wndTop + wndHeight) {
+				el = upper;
+				coord = bottom - wndHeight - 1;
+			} else {
+				el = lower;
+				coord = top + 1;
 			}
 
 			currentDeck !== el && trigger('change', [el])
 			currentDeck = el;
 
-			return el;
+			return coord;
 		}
-	}
-
-	function isVol(el) {
-		var inst = skrollr.get(),
-			top = inst.getScrollTop(),
-			height = window.innerHeight,
-			bottom = top + height,
-			elTop = inst.relativeToAbsolute(el, 'top', 'top'),
-			elBottom = inst.relativeToAbsolute(el, 'top', 'bottom'),
-			offset =  height * settings.offset / 100;
-
-		return elTop + offset < bottom  && elBottom - offset > top;
 	}
 
 
