@@ -58,7 +58,6 @@
 	skrollr.addEvent(window, 'load resize', function () {
 		resizeDecks({});
 		update({});
-		skrollr.get().refresh(segmentsList);
 	});
 
 
@@ -183,7 +182,8 @@
 			deckHeight = deck.offsetHeight;
 			deck.style.height = (deckHeight < wndHeight ? wndHeight : deckHeight) + 'px';
 		}
-		deck.offsetHeight;
+
+		skrollr.get().refresh(segmentsList);
 	}
 
 
