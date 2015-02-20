@@ -1,5 +1,5 @@
 /*!
- * skrollr-decks 1.0.6
+ * skrollr-decks 1.0.7
  * Fullpage presentation decks with scrolling
  * https://github.com/TrySound/skrollr-decks
  * 
@@ -67,6 +67,7 @@
 	skrollr.addEvent(window, 'load resize', function () {
 		resizeDecks({});
 		update({});
+		skrollr.get().refresh(segmentsList);
 	});
 
 

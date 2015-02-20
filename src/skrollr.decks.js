@@ -58,6 +58,7 @@
 	skrollr.addEvent(window, 'load resize', function () {
 		resizeDecks({});
 		update({});
+		skrollr.get().refresh(segmentsList);
 	});
 
 
