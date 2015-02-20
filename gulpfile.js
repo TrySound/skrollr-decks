@@ -25,5 +25,5 @@ gulp.task('default', function () {
 });
 
 gulp.task('dev', ['default'], function () {
-	gulp.watch('src/*.js', ['default']);
+	gulp.watch(['package.json', 'src/*.js'], ['default']);
 })

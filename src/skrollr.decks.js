@@ -25,9 +25,7 @@
 
 
 
-	var setTimeout = window.setTimeout,
-		clearTimeout = window.clearTimeout,
-		isInitialized = false,
+	var isInitialized = false,
 		settings,
 		segments = {},
 		segmentsList = [],
@@ -36,7 +34,7 @@
 
 
 	// Stop animating on scroll keys
-	document.addEventListener('keydown', function (e) {
+	skrollr.addEvent(document, 'keydown', function (e) {
 		var inst = skrollr.get(),
 			keys = [38, 40,
 					33, 34,
@@ -47,23 +45,20 @@
 				inst.stopAnimateTo();
 			}
 		}
-	}, false);
-
+	})
 
 	// Auto initialize
-	document.addEventListener('DOMContentLoaded', function () {
-		var el = document.querySelector('.skrollr-decks-init');
-		if(el && el.tagName === 'BODY') {
+	skrollr.addEvent(document, 'DOMContentLoaded', function () {
+		if(document.querySelector('body.skrollr-decks-init')) {
 			init();
 		}
-	}, false);
+	})
 
 	// Auto resize
-	window.addEventListener('load', resizeDecks, false);
-	window.addEventListener('load', update, false);
-	window.addEventListener('resize', resizeDecks, false);
-	window.addEventListener('resize', update, false);
-
+	skrollr.addEvent(window, 'load resize', function () {
+		resizeDecks({});
+		update({});
+	});
 
 
 	return {
@@ -97,7 +92,9 @@
 			isInitialized = true;
 		}
 
-		var key, inst, renderTimer, local;
+		var setTimeout = window.setTimeout,
+			clearTimeout = window.clearTimeout,
+			key, inst, renderTimer, local;
 
 		local = settings = {};
 		user = typeof user === 'object' ? user : {};
