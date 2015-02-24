@@ -2,7 +2,7 @@
   "name": "skrollr-decks",
   "version": "1.0.7",
   "description": "Fullpage presentation decks with scrolling",
-  "main": "gulpfile.js",
+  "main": "dist/skrollr.decks.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
