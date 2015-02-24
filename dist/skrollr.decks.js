@@ -66,7 +66,12 @@
 	// Auto resize
 	skrollr.addEvent(window, 'load resize', function () {
 		resizeDecks({});
-		update({});
+
+		if(currentDeck) {
+			animateTo('#' + currentDeck.id, true);
+		} else {
+			update({});
+		}
 	});
 
 
