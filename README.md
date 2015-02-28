@@ -17,10 +17,11 @@ Add 'skrollr-decks-init' class to `<body>` and 'skrollr-deck' class to every sec
 
 - `options.decks` (.skrollr-deck) - decks classname
 - `offset` (10) - offset in percents to deck since which will autoscroll
-- `duration`(600) - scrolling duration
-- `easing`(quaratic) - scrolling easing, [more](https://github.com/Prinzhorn/skrollr#easing)
-- `delay`(500) - delay before scroll
-- `autoscroll`(true)
+- `duration` (600) - scrolling duration
+- `easing` (quaratic) - scrolling easing, [more](https://github.com/Prinzhorn/skrollr#easing)
+- `delay` (500) - delay before scroll
+- `autoscroll` (true)
+- `history` (false) - hash navigation
 
 ###skrollr.decks.refresh()
 
