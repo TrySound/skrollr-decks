@@ -8,7 +8,15 @@
 bower i skrollr-decks
 ```
 
-Add 'skrollr-decks-init' class to `<body>` and 'skrollr-deck' class to every section.
+```html
+<body class="skrollr-decks-init" data-skrollr-decks-history="true">
+	<main id="skrollr-body">
+		<section class="skrollr-deck"></section>
+		<section class="skrollr-deck"></section>
+		<section class="skrollr-deck"></section>
+	</main>
+</body>
+```
 
 
 ##API

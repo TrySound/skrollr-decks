@@ -122,7 +122,7 @@ a {
 
 </head>
 
-<body class="skrollr-decks-init">
+<body class="skrollr-decks-init" data-skrollr-decks-history="true">
 
 <div class="wrapper">
 
@@ -244,10 +244,6 @@ a {
 <script src='https://prinzhorn.github.io/skrollr/dist/skrollr.min.js'></script>
 <script src="src/skrollr.decks.js"></script>
 <script>
-
-skrollr.decks.on('change', function (active) {
-	console.log(active);
-});
 
 document.querySelector('.main-nav').addEventListener('click', function (e) {
 	var el = e.target;

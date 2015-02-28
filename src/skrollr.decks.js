@@ -91,7 +91,7 @@
 
 
 	// Initialize
-	function init (user) {
+	function init (options) {
 		if(isInitialized) {
 			return false;
 		} else {
@@ -100,13 +100,9 @@
 
 		var setTimeout = window.setTimeout,
 			clearTimeout = window.clearTimeout,
-			key, inst, renderTimer, local;
+			inst, renderTimer, local;
 
-		local = settings = {};
-		user = typeof user === 'object' ? user : {};
-		for(key in defaults) if(defaults.hasOwnProperty(key)) {
-			settings[key] = user[key] || defaults[key];
-		}
+		local = settings = extend({}, defaults, options, getDataAttrs(document.body));
 
 		inst = skrollr.init({
 			forceHeight: false
@@ -281,6 +277,42 @@
 		}
 
 		return frag;
+	}
+
+	function extend() {
+		var result = arguments[0] || {};
+		var i, max, options, key;
+
+		for (i = 1, max = arguments.length; i < max; i++) {
+			options = arguments[i];
+			if (options != null) {
+				for (key in options) if(options.hasOwnProperty(key) && options[key] !== undefined) {
+					result[key] = options[key];
+				}
+			}
+		}
+
+		return result;
+	}
+
+	function getDataAttrs(el) {
+		var attrs = el.attributes,
+			prefix = 'data-skrollr-decks-',
+			i, name, val,
+			result = {};
+
+		for(i = attrs.length; i--; ) {
+			name = attrs[i].name;
+			val = attrs[i].value;
+			if(name.indexOf(prefix) === 0) {
+				result[name.substring(prefix.length)] =
+					val === 'true' ? true :
+					val === 'false' ? false :
+					isNaN(val) ? val : Number(val);
+			}
+		}
+
+		return result;
 	}
 
 }));
