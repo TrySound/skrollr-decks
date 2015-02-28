@@ -15,7 +15,7 @@ body {
 	font: bold 1em sans-serif;
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 992px) {
 	body {
 		font-size: 1.5em;
 	}
@@ -80,14 +80,28 @@ a {
 }
 .main-nav ul {
 	list-style: none;
-	padding: 20px 40px;
+	padding: 10px;
 	margin: 0;
 }
+
 .main-nav li {
 	display: inline-block;
 	color: #000;
 }
 
+.main-nav li a {
+	display: block;
+	padding: 5px 2px;
+	text-decoration: none;
+	background: rgba(0, 0, 0, .1);
+	border-radius: 5px;
+}
+
+@media (min-width: 992px) {
+	.main-nav ul {
+		padding: 20px 40px;
+	}
+}
 
 .skrollr-deck {
 	position: relative;
@@ -132,9 +146,10 @@ a {
 
 	<nav class="main-nav">
 		<ul>
-			<li><a href="#about">About</a></li>
+			<li><a href="#first">Top</a></li>
 			<li><a href="up">Up</a></li>
 			<li><a href="down">Down</a></li>
+			<li><a href="#last">Bottom</a></li>
 		</ul>
 	</nav>
 
@@ -147,7 +162,7 @@ a {
 
 	<main id="skrollr-body">
 		
-		<section class="skrollr-deck" style="background: #393;">
+		<section class="skrollr-deck" style="background: #393;" id="first">
 			<span>1</span>
 		</section>
 		
@@ -217,7 +232,7 @@ a {
 			<span>5</span>
 		</section>
 		
-		<section class="skrollr-deck" id="about" style="padding: 50px 0;">
+		<section class="skrollr-deck" id="last" style="padding: 50px 0;">
 			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi nobis fugit atque placeat, illo consequuntur ipsa corporis laborum commodi incidunt! Voluptas, vel, quibusdam.</p>
 			<p>Deleniti doloribus, voluptatibus praesentium recusandae, quos debitis. Voluptatum vel praesentium quo, pariatur odit nulla. Enim, ipsam, optio deserunt aperiam quo placeat ad repudiandae!</p>
 			<p>Rerum sed libero dolor neque explicabo amet culpa qui! Cupiditate accusamus necessitatibus quo, non, ratione facilis sint aliquam in iste optio quidem, eligendi.</p>
