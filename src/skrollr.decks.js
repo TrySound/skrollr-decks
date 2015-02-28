@@ -17,7 +17,8 @@
 		duration: 600,
 		easing: 'quadratic',
 		delay: 500,
-		autoscroll: true
+		autoscroll: true,
+		history: false
 	}, callbacks = {
 		render: [],
 		change: []
@@ -119,6 +120,17 @@
 		document.body.appendChild(nav);
 
 		inst.refresh(nav.children);
+
+		on('change', function (active) {
+			var id = '#' + active.id;
+			if(local.history) {
+				if(history.pushState) {
+					history.pushState(null, null, id);
+				} else {
+					window.location.hash = id;
+				}
+			}
+		});
 
 		inst.on('render', function (e) {
 			var inst = this,
