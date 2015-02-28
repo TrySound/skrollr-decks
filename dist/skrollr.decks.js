@@ -1,5 +1,5 @@
 /*!
- * skrollr-decks 1.0.7
+ * skrollr-decks 1.0.8
  * Fullpage presentation decks with scrolling
  * https://github.com/TrySound/skrollr-decks
  * 
@@ -22,7 +22,7 @@
 
 	var defaults = {
 		decks: '.skrollr-deck',
-		offset: 15,
+		offset: 10,
 		duration: 600,
 		easing: 'quadratic',
 		delay: 500,

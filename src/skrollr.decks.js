@@ -13,7 +13,7 @@
 
 	var defaults = {
 		decks: '.skrollr-deck',
-		offset: 15,
+		offset: 10,
 		duration: 600,
 		easing: 'quadratic',
 		delay: 500,
