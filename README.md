@@ -34,7 +34,7 @@ Recalc height of all decks. Need to update when content added
 
 ###skrollr.decks.on(event, callback)
 
-- `change(activeElement)` - calls when active deck is changed
+- `change(activeDeck)` - calls when active deck is changed
 - `render(e)` - skrollr render event
 
 ##License
