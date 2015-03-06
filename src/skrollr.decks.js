@@ -1,4 +1,4 @@
-(function (module) {
+;(function (module) {
 	"use strict";
 
 	if( ! window.skrollr) {

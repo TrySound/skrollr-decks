@@ -7,7 +7,7 @@
  * Copyright (c) 2015, Bogdan Chadkin <trysound@yandex.ru>
  */
 
-(function (module) {
+;(function (module) {
 	"use strict";
 
 	if( ! window.skrollr) {
