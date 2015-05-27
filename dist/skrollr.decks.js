@@ -206,6 +206,9 @@
 		}
 
 		skrollr.get().refresh(segmentsList);
+		if(currentDeck) {
+			animateTo('#' + currentDeck.id, true);
+		}
 	}
 
 
