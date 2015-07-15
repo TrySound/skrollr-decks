@@ -130,9 +130,9 @@
 			var id = '#' + active.id;
 			if(local.history) {
 				if(history.pushState) {
-					history.pushState(null, null, id);
+					history.pushState(null, null, location.href.split("#")[0] + id);
 				} else {
-					window.location.hash = id;
+					window.location.hash = location.href.split("#")[0] + id;
 				}
 			}
 		});
