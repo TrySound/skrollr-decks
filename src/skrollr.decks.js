@@ -118,12 +118,12 @@
 		inst.refresh(nav.children);
 
 		on('change', function (active) {
-			var id = '#' + active.id;
+			var id = location.href.split("#")[0] +'#' + active.id;
 			if(local.history) {
 				if(history.pushState) {
-					history.pushState(null, null, location.href.split("#")[0] + id);
+					history.pushState(null, null, id);
 				} else {
-					window.location.hash = location.href.split("#")[0] + id;
+					window.location.hash = id;
 				}
 			}
 		});

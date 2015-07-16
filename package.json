@@ -1,6 +1,6 @@
 {
   "name": "skrollr-decks",
-  "version": "1.0.10",
+  "version": "1.1.0",
   "description": "Fullpage presentation decks with scrolling",
   "main": "dist/skrollr.decks.js",
   "scripts": {
