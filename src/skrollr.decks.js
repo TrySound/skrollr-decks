@@ -118,7 +118,7 @@
 		inst.refresh(nav.children);
 
 		on('change', function (active) {
-			var id = '#' + active.id;
+			var id = location.href.split("#")[0] +'#' + active.id;
 			if(local.history) {
 				if(history.pushState) {
 					history.pushState(null, null, id);

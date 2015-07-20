@@ -1,5 +1,5 @@
 /*!
- * skrollr-decks 1.0.10
+ * skrollr-decks 1.1.0
  * Fullpage presentation decks with scrolling
  * https://github.com/TrySound/skrollr-decks
  * 
@@ -127,7 +127,7 @@
 		inst.refresh(nav.children);
 
 		on('change', function (active) {
-			var id = '#' + active.id;
+			var id = location.href.split("#")[0] +'#' + active.id;
 			if(local.history) {
 				if(history.pushState) {
 					history.pushState(null, null, id);
