@@ -18,7 +18,8 @@
 		easing: 'quadratic',
 		delay: 500,
 		autoscroll: true,
-		history: false
+		history: false,
+		customEasing: {}
 	}, callbacks = {
 		render: [],
 		change: []
@@ -69,6 +70,7 @@
 
 	return {
 		init: init,
+		destroy: destroyDecks,
 		animateTo: animateTo,
 		refresh: resizeDecks,
 		on: on
@@ -105,7 +107,8 @@
 		local = settings = extend({}, defaults, options, getDataAttrs(document.body));
 
 		inst = skrollr.init({
-			forceHeight: false
+			forceHeight: false,
+			easing: local.customEasing
 		});
 
 		segments = findDecks(local.decks, segmentsList);
@@ -141,6 +144,40 @@
 
 			trigger('render', [e]);
 		});
+	}
+
+	// destroy
+	function destroyDecks() {
+		if(!isInitialized) {
+			return false;
+		} else {
+			isInitialized = false;
+		}
+
+		var inst = skrollr.get(),
+			nav = document.getElementById('skrollr-decks-navlist')
+			deck, i;
+
+		nav.parentElement.removeChild(nav);
+
+		for(i = segmentsList.length - 1; i > -1; i--) {
+			deck = segmentsList[i];
+			deck.style.height = 'auto';
+		}
+
+		settings = undefined;
+		currentDeck = undefined;
+		segments = {};
+		segmentsList = [];
+		nav = undefined;
+		callbacks = {
+			render: [],
+			change: []
+		};
+
+		if(inst) {
+			inst.destroy();
+		}
 	}
 
 
@@ -266,6 +303,7 @@
 			i, max, el;
 
 		frag.style.display = 'none';
+		frag.setAttribute('id', 'skrollr-decks-navlist')
 		item.setAttribute('data-top-bottom', '');
 		item.setAttribute('data-bottom-top', '');
 
